@@ -106,6 +106,23 @@ function validateAndCalculate(input) {
 
 
 /**
+ * Returns the name of the coin in a human-friendly format. For example:
+ * 1 => £1
+ * 0.20 => 20p
+ * @param {string} coin Numeric name of the coin
+ */
+function getCoinHumanizedName(coin) {
+  if (/\./.test(coin)) {
+    coin *= DECIMAL_MULTIPLIER;
+    coin += "p";
+  } else {
+    coin = "\xA3" + coin;
+  }
+  return coin;
+}
+
+
+/**
  * Loads result in a friendly format into the page
  * @param {object} result Data to show
  */
@@ -116,7 +133,9 @@ function showResult(result) {
 
   _.each(resultKeys, function(key) {
     var $li = $("<li>");
-    $li.html(key + ": " + result[key]);
+    var coin_name = getCoinHumanizedName(key);
+
+    $li.html(coin_name + ": " + result[key]);
     $ul.append($li);
   });
 
