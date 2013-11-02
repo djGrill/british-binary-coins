@@ -1,4 +1,7 @@
 $(function() {
+  // CONSTANTS
+  var DECIMAL_MULTIPLIER = 100;
+
   /**
   * SterlingValidator constructor
   **/
@@ -39,7 +42,7 @@ $(function() {
 
         // make sure 'numeric_input' is properly rounded,
         // -- operations with floats are not always 100% precise
-        this.numeric_input = roundToDecimalPlace(this.numeric_input, 2);
+        this.numeric_input = roundToDecimalPlace(this.numeric_input);
       }
     }, this);
 
@@ -55,17 +58,16 @@ $(function() {
     var number = /\d+(\.\d+)?/.exec(str)[0];
 
     // check if the input refers to 'pences' only. In that case, convert to
-    // -- the POUND.pence version with 2 decimal numbers
+    // -- the POUND.pence version with decimal numbers (determined by DECIMAL_MULTIPLIER)
     if (/\./.test(number) == false) {
-      number /= 100;
+      number /= DECIMAL_MULTIPLIER;
     }
 
     return parseFloat(number);
   };
 
-  function roundToDecimalPlace(number, decimal_place) {
-    var multiplier = Math.pow(10, decimal_place);
-    return Math.round(number * multiplier) / multiplier;
+  function roundToDecimalPlace(number) {
+    return Math.round(number * DECIMAL_MULTIPLIER) / DECIMAL_MULTIPLIER;
   };
 
   /**
@@ -75,7 +77,7 @@ $(function() {
 
   var validator = new SterlingValidator(input);
   if (validator.validate()) {
-    var numeric_input = roundToDecimalPlace(convertToValidFloat(input), 2);
+    var numeric_input = roundToDecimalPlace(convertToValidFloat(input));
     var calculator = new PenniesCalculator(numeric_input);
     calculator.calculate();
   }
