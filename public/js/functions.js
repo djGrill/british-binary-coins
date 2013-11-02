@@ -70,9 +70,9 @@ function convertToValidFloat(str) {
     number += ".00";
   }
 
-  // if str has the format "NUMBER" (pences only), convert number to
+  // if str has the format "NUMBER" or "NUMBERp" (pences only), convert number to
   // -- the POUND.pence version with decimal numbers (determined by DECIMAL_MULTIPLIER)
-  if (/^\d+$/.test(str)) {
+  if (/^\d+p?$/.test(str)) {
     number /= DECIMAL_MULTIPLIER;
   }
 
