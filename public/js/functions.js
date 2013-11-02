@@ -52,7 +52,15 @@ $(function() {
   function convertToValidFloat(str) {
     // parseFloat() doesn't work properly with the unicode '£' character,
     // -- so first we get the "numeric" part of the string with a regex
-    return parseFloat(/\d+(\.\d+)?/.exec(str));
+    var number = /\d+(\.\d+)?/.exec(str)[0];
+
+    // check if the input refers to 'pences' only. In that case, convert to
+    // -- the POUND.pence version with 2 decimal numbers
+    if (/\./.test(number) == false) {
+      number /= 100;
+    }
+
+    return parseFloat(number);
   };
 
   function roundToDecimalPlace(number, decimal_place) {
@@ -63,7 +71,7 @@ $(function() {
   /**
   * Test code
   **/
-  var input = "\xA321.352213487p";
+  var input = "197p";
 
   var validator = new SterlingValidator(input);
   if (validator.validate()) {
