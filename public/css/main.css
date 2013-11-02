@@ -46,15 +46,12 @@ body {
 }
 
 
-#result {
-  width: 16%;
-  margin: 0 auto;
-}
-
-
 .coins {
+  margin: 0 auto;
+  width: 7em;
   list-style: none;
   padding: 0;
+  padding-left: 4em;
   font-size: 2em;
 }
 
