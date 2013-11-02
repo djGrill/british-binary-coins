@@ -84,11 +84,12 @@ $(function() {
   };
 
   function printResult(result) {
+    var result_keys = Object.keys(result).sort().reverse();
     var $ul = $("<ul>");
 
-    _.each(result, function(value, key) {
+    _.each(result_keys, function(key) {
       var $li = $("<li>");
-      $li.html(key + ": " + value);
+      $li.html(key + ": " + result[key]);
       $ul.append($li);
     });
 
