@@ -63,13 +63,16 @@ PenniesCalculator.prototype.calculate = function() {
  * @param {string} str String to convert
  */
 function convertToValidFloat(str) {
-  // parseFloat() doesn't work properly with the unicode '£' character,
-  // -- so first we get the "numeric" part of the string with a regex
   var number = /\d+(\.\d+)?/.exec(str)[0];
 
-  // check if the input refers to 'pences' only. In that case, convert to
+  // if str has the format "£NUMBER", convert number to "NUMBER.00"
+  if (/^\xA3\d+$/.test(str)) {
+    number += ".00";
+  }
+
+  // if str has the format "NUMBER" (pences only), convert number to
   // -- the POUND.pence version with decimal numbers (determined by DECIMAL_MULTIPLIER)
-  if (/\./.test(number) === false) {
+  if (/^\d+$/.test(str)) {
     number /= DECIMAL_MULTIPLIER;
   }
 
