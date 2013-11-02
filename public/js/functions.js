@@ -33,7 +33,7 @@ $(function() {
     };
 
     _.each(this.valid_coins, function(coin, index) {
-      if (this.numeric_input >= coin) {
+      while (this.numeric_input >= coin) {
         updateResultCoins(coin);
         this.numeric_input -= coin;
 
@@ -63,7 +63,7 @@ $(function() {
   /**
   * Test code
   **/
-  var input = "\xA31.212213487p";
+  var input = "\xA321.352213487p";
 
   var validator = new SterlingValidator(input);
   if (validator.validate()) {
