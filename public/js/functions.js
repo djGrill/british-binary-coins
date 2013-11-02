@@ -35,8 +35,7 @@ PenniesCalculator.prototype.calculate = function() {
   function updateResultCoins(coin) {
     if (!resultCoins[coin]) {
       resultCoins[coin] = 1;
-    }
-    else {
+    } else {
       resultCoins[coin] += 1;
     }
   }
@@ -56,7 +55,7 @@ PenniesCalculator.prototype.calculate = function() {
 
 
 /**
- * Converts and returns a float number with 2 decimal values. For example:
+ * Converts str and returns a float number with 2 decimal values. For example:
  * £1.25 => 1.25
  * 125 => 1.25
  * 25p => 0.25
@@ -65,7 +64,7 @@ PenniesCalculator.prototype.calculate = function() {
 function convertToValidFloat(str) {
   var number = /\d+(\.\d+)?/.exec(str)[0];
 
-  // if str has the format "£NUMBER", convert number to "NUMBER.00"
+  // if str has the format "£NUMBER" (pounds only), convert number to "NUMBER.00"
   if (/^\xA3\d+$/.test(str)) {
     number += ".00";
   }
@@ -96,32 +95,13 @@ function roundToDecimalPlace(number) {
  */
 function validateAndCalculate(input) {
   var validator = new SterlingValidator(input);
+
   if (validator.validate()) {
-    var numericInput = roundToDecimalPlace(convertToValidFloat(input));
-    var calculator = new PenniesCalculator(numericInput);
-    var result = calculator.calculate();
-    showResult(result);
-  }
-  else {
+    var calculator = new PenniesCalculator(roundToDecimalPlace(convertToValidFloat(input)));
+    showResult(calculator.calculate());
+  } else {
     $("#result").html("Error: wrong format");
   }
-}
-
-
-/**
- * Returns the name of the coin in a human-friendly format. For example:
- * 1 => £1
- * 0.20 => 20p
- * @param {string} coin Numeric name of the coin
- */
-function getCoinHumanizedName(coin) {
-  if (/\./.test(coin)) {
-    coin *= DECIMAL_MULTIPLIER;
-    coin += "p";
-  } else {
-    coin = "\xA3" + coin;
-  }
-  return coin;
 }
 
 
@@ -131,28 +111,47 @@ function getCoinHumanizedName(coin) {
  */
 function showResult(result) {
 
-  function isPence(coin_name) {
-    return /p$/.test(coin_name);
+  /**
+   * Returns the name of the coin in a human-friendly format. For example:
+   * 1 => £1
+   * 0.20 => 20p
+   * @param {string} coin Numeric name of the coin
+   */
+  function getHumanizedCoinName(coin) {
+    if (/\./.test(coin)) {
+      coin *= DECIMAL_MULTIPLIER;
+      coin += "p";
+    } else {
+      coin = "\xA3" + coin;
+    }
+
+    return coin;
+  }
+
+  function isPence(coinName) {
+    return (/p$/.test(coinName));
   }
 
   // reverse the keys order to show result sorted by coin value
   var resultKeys = Object.keys(result).sort().reverse();
+
   var $ul = $("<ul>");
   $ul.addClass("coins");
 
   _.each(resultKeys, function(key) {
     var $li = $("<li>");
-    var coin_name = getCoinHumanizedName(key);
+    var coinName = getHumanizedCoinName(key);
 
-    var $new_coin = $("<span>");
-    $new_coin.html(coin_name);
-    $new_coin.addClass("coin");
-    if (isPence(coin_name)) {
-      $new_coin.addClass("pence");
+    var $newCoin = $("<span>");
+    $newCoin.html(coinName);
+    $newCoin.addClass("coin");
+
+    if (isPence(coinName)) {
+      $newCoin.addClass("pence");
     }
 
     $li.html(result[key] + " x");
-    $li.append($new_coin);
+    $li.append($newCoin);
     $ul.append($li);
   });
 
@@ -164,10 +163,10 @@ $(function() {
 
   $("#form-calculate").submit(function(e) {
     e.preventDefault();
-    var input_val = $.trim($("#input-amount").val());
+    var inputVal = $.trim($("#input-amount").val());
 
-    if (input_val) {
-      validateAndCalculate(input_val);
+    if (inputVal) {
+      validateAndCalculate(inputVal);
     }
   });
 });
