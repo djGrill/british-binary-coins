@@ -130,6 +130,11 @@ function getCoinHumanizedName(coin) {
  * @param {object} result Data to show
  */
 function showResult(result) {
+
+  function isPence(coin_name) {
+    return /p$/.test(coin_name);
+  }
+
   // reverse the keys order to show result sorted by coin value
   var resultKeys = Object.keys(result).sort().reverse();
   var $ul = $("<ul>");
@@ -142,6 +147,9 @@ function showResult(result) {
     var $new_coin = $("<span>");
     $new_coin.html(coin_name);
     $new_coin.addClass("coin");
+    if (isPence(coin_name)) {
+      $new_coin.addClass("pence");
+    }
 
     $li.html(result[key] + " x");
     $li.append($new_coin);
