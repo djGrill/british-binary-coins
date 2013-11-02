@@ -1,6 +1,7 @@
 $(function() {
   // CONSTANTS
   var DECIMAL_MULTIPLIER = 100;
+  var VALID_COINS = [2, 1, .5, .2, .02, .01];
 
   /**
   * SterlingValidator constructor
@@ -18,7 +19,6 @@ $(function() {
   * PenniesCalculator constructor
   **/
   function PenniesCalculator(numeric_input) {
-    this.valid_coins = [2, 1, .5, .2, .02, .01];
     this.numeric_input = numeric_input;
   };
 
@@ -35,7 +35,7 @@ $(function() {
       }
     };
 
-    _.each(this.valid_coins, function(coin, index) {
+    _.each(VALID_COINS, function(coin, index) {
       while (this.numeric_input >= coin) {
         updateResultCoins(coin);
         this.numeric_input -= coin;
@@ -76,11 +76,23 @@ $(function() {
       var numeric_input = roundToDecimalPlace(convertToValidFloat(input));
       var calculator = new PenniesCalculator(numeric_input);
       var result = calculator.calculate();
-      console.log(result);
+      printResult(result);
     }
     else {
       // show error message
     }
+  };
+
+  function printResult(result) {
+    var $ul = $("<ul>");
+
+    _.each(result, function(value, key) {
+      var $li = $("<li>");
+      $li.html(key + ": " + value);
+      $ul.append($li);
+    });
+
+    $("#result").html($ul);
   };
 
   $("#form-calculate").submit(function(e) {
