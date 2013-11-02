@@ -41,6 +41,11 @@ body {
   padding: 0.6em 3em;
 }
 
+#result {
+  width: 16%;
+  margin: 0 auto;
+}
+
 .coins {
   list-style: none;
   padding: 0;
@@ -49,6 +54,7 @@ body {
 
 .coins li {
   margin-bottom: 0.5em;
+  float: right;
 }
 
 .coin {
