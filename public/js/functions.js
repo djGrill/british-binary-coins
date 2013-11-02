@@ -133,12 +133,18 @@ function showResult(result) {
   // reverse the keys order to show result sorted by coin value
   var resultKeys = Object.keys(result).sort().reverse();
   var $ul = $("<ul>");
+  $ul.addClass("coins");
 
   _.each(resultKeys, function(key) {
     var $li = $("<li>");
     var coin_name = getCoinHumanizedName(key);
 
-    $li.html(coin_name + ": " + result[key]);
+    var $new_coin = $("<span>");
+    $new_coin.html(coin_name);
+    $new_coin.addClass("coin");
+
+    $li.html(result[key] + " x");
+    $li.append($new_coin);
     $ul.append($li);
   });
 
@@ -146,6 +152,8 @@ function showResult(result) {
 }
 
 $(function() {
+  $("#input-amount").focus();
+
   $("#form-calculate").submit(function(e) {
     e.preventDefault();
     var input_val = $.trim($("#input-amount").val());
