@@ -148,7 +148,7 @@ function showResult(result) {
 $(function() {
   $("#form-calculate").submit(function(e) {
     e.preventDefault();
-    var input_val = $("#input-amount").val();
+    var input_val = $.trim($("#input-amount").val());
 
     if (input_val) {
       validateAndCalculate(input_val);
