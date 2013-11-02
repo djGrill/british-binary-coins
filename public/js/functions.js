@@ -10,7 +10,7 @@ var VALID_COINS = [2, 1, 0.5, 0.2, 0.02, 0.01];
  */
 function SterlingValidator(input) {
   this.input = input;
-  this.pattern = /^\xA3?\d+(\.\d+p?)?$|^\d+p?$/;
+  this.pattern = /^\xA3?\d+(\.\d*)?p?$|^\d+p?$/;
 
   // returns true if this.input matches this.pattern
   this.validate = function() {
