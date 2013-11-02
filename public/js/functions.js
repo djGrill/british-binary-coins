@@ -46,7 +46,7 @@ $(function() {
       }
     }, this);
 
-    console.log(coins);
+    return coins;
   };
 
   /**
@@ -70,15 +70,21 @@ $(function() {
     return Math.round(number * DECIMAL_MULTIPLIER) / DECIMAL_MULTIPLIER;
   };
 
-  /**
-  * Test code
-  **/
-  var input = "197p";
+  function validateAndCalculate(input) {
+    var validator = new SterlingValidator(input);
+    if (validator.validate()) {
+      var numeric_input = roundToDecimalPlace(convertToValidFloat(input));
+      var calculator = new PenniesCalculator(numeric_input);
+      var result = calculator.calculate();
+      console.log(result);
+    }
+    else {
+      // show error message
+    }
+  };
 
-  var validator = new SterlingValidator(input);
-  if (validator.validate()) {
-    var numeric_input = roundToDecimalPlace(convertToValidFloat(input));
-    var calculator = new PenniesCalculator(numeric_input);
-    calculator.calculate();
-  }
+  $("#form-calculate").submit(function(e) {
+    e.preventDefault();
+    validateAndCalculate($("#input-amount").val());
+  });
 });
