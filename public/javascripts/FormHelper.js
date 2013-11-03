@@ -10,9 +10,9 @@ define(["jquery", "underscore", "SterlingValidator", "FormatHelper", "PenniesCal
    * @param {string} input Input text form the user
    */
   FormHelper.prototype.processInput = function(input) {
-    var validator = new SterlingValidator(input);
+    var validator = new SterlingValidator();
 
-    if (validator.validate()) {
+    if (validator.validate(input)) {
       var formatHelper = new FormatHelper();
       var numericInput = formatHelper.convertToValidFloat(input);
       var calculator = new PenniesCalculator(numericInput);

@@ -34,7 +34,9 @@
     require([
         "domReady!",
         "FormatHelper",
-        "spec/FormatHelperSpec"
+        "SterlingValidator",
+        "spec/FormatHelperSpec",
+        "spec/SterlingValidatorSpec"
       ], function(document) {
         jasmine.getEnv().addReporter(
           new jasmine.HtmlReporter()
