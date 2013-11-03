@@ -24,7 +24,7 @@ define(["Constants"], function(Constants) {
       number /= Constants.DECIMAL_MULTIPLIER;
     }
 
-    return parseFloat(number);
+    return this.roundToDecimalPlace(parseFloat(number));
   };
 
 

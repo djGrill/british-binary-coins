@@ -14,7 +14,7 @@ define(["jquery", "underscore", "SterlingValidator", "FormatHelper", "PenniesCal
 
     if (validator.validate()) {
       var formatHelper = new FormatHelper();
-      var numericInput = formatHelper.roundToDecimalPlace(formatHelper.convertToValidFloat(input));
+      var numericInput = formatHelper.convertToValidFloat(input);
       var calculator = new PenniesCalculator(numericInput);
       this.showResult(calculator.calculate());
     } else {

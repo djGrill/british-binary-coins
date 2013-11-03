@@ -1,5 +1,5 @@
 use Rack::Static,
-    urls: ["/img", "/javascripts", "/css"],
+    urls: ["/lib", "/javascripts", "/css"],
     root: "public"
 
 map "/" do
