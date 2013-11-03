@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="stylesheet" type="text/css" href="../lib/jasmine/jasmine.css">
+  <script type="text/javascript" src="../lib/jasmine/jasmine.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-html.js"></script>
+  <script type="text/javascript" src="../lib/require/require.js"></script>
+
+  <script type="text/javascript">
+    requirejs.config({
+      paths: {
+        jquery: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min",
+        underscore: "../lib/underscore-min",
+        domReady: "../lib/require/domReady",
+        Constants: "../public/javascripts/Constants",
+        FormatHelper: "../public/javascripts/FormatHelper",
+        FormHelper: "../public/javascripts/FormHelper",
+        PenniesCalculator: "../public/javascripts/PenniesCalculator",
+        SterlingValidator: "../public/javascripts/SterlingValidator",
+      },
+
+      shim: {
+        underscore: {
+          exports: '_'
+        },
+        jquery: {
+          exports: "$"
+        }
+      }
+    });
+
+    require([
+        "domReady!"
+      ], function(document) {
+        jasmine.getEnv().addReporter(
+          new jasmine.HtmlReporter()
+        );
+
+        // Run all the loaded test specs.
+        jasmine.getEnv().execute();
+    });
+  </script>
+</head>
+
+<body>
+</body>
+</html>
